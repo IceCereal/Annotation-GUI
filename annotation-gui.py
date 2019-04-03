@@ -112,3 +112,24 @@ print ("Please Enter Your Name:\t")
 name = str(input())
 
 writeLog("NAME:\t"+name)
+
+# IMPORT NLTK ATTEMPT#1
+try:
+	import nltk
+	writeLog("NLTK#1 IMPORTED")
+except:
+	try:
+		subprocess.run(['pip', 'install', 'nltk']) # PIP INSTALL (PIP3 DOESN'T EXIST)
+		writeLog("PIP INSTALL NLTK: SUCCESS")
+	except:
+		subprocess.run(['pip3', 'install', 'nltk']) # PIP3 INSTALL (PIP DOESN'T EXIST)
+		writeLog("PIP3 INSTALL NLTK: SUCCESS")
+
+# IMPORT NLTK ATTEMPT#2
+try:
+	import nltk
+	writeLog("NLTK#2 IMPORTED")
+except:
+	print ("ERROR1: NLTK\n\nEXIT")
+	writeLog("IMPORT NLTK: FAIL! SYS EXIT")
+	sys.exit()
