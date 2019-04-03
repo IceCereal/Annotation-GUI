@@ -71,3 +71,28 @@ writeLog("LOOKING FOR SOURCEEDITABLE.CSV")
 if "SourceEditable.csv" not in filesInDir:
 	fileNameOrigSource = makeSourceEditable()
 writeLog("FOUND/COMPLETED: SOURCEEDITABLE")
+
+# METADATA STRUCTURE
+metaData = {
+	"Sessions_Activated" : 0,
+	"OriginalSourceFileName": None,
+	"WordsCompleted" : 0,
+	"Names" : []
+}
+
+# LOOK/CREATE METADATA_ANNOTATION.JSON
+writeLog("LOOKING FOR METADATA_ANNOTATION.JSON")
+if "metadata_annotation.json" in filesInDir:
+	with open("metadata_annotation.json", 'r') as Fobj:
+		rawMetaData = Fobj.read()
+		metaData = json.loads(rawMetaData)
+		
+		writeLog("METADATA_ANNOTATION.JSON LOADED")
+	
+else:
+	writeLog("METADATA_ANNOTATION.JSON NOT FOUND")
+	writeLog("CREATING METADATA_ANNOTATION.JSON")
+
+	metaData["OriginalSourceFileName"] = fileNameOrigSource
+
+	writeLog("CREATED METADATA_ANNOTATION.JSON")
