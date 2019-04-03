@@ -490,3 +490,13 @@ def main(metaData):
 		pg.display.flip()
 
 		clock.tick(60)
+
+# UPDATE METADATA_ANNOTATION.JSON
+writeLog("UPDATE: METADATA_ANNOTATION.JSON")
+metaData["Sessions_Activated"] += 1
+if name not in metaData["Names"]:
+	metaData["Names"].append(name)
+with open("metadata_annotation.json", 'w') as Fobj:
+	metaDataJson = json.dumps(metaData)
+	Fobj.write(metaDataJson)
+writeLog("UPDATED: METADATA_ANNOTATION.JSON")
