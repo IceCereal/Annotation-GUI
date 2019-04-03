@@ -104,3 +104,11 @@ try:
 	writeLog("CREATED SOURCEALTS")
 except:
 	writeLog("LOCATED SOURCEALTS")
+
+# GET NAME
+print ("Welcome!")
+
+print ("Please Enter Your Name:\t")
+name = str(input())
+
+writeLog("NAME:\t"+name)
