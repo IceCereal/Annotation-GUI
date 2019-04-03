@@ -500,3 +500,16 @@ with open("metadata_annotation.json", 'w') as Fobj:
 	metaDataJson = json.dumps(metaData)
 	Fobj.write(metaDataJson)
 writeLog("UPDATED: METADATA_ANNOTATION.JSON")
+
+writeLog("BEGIN MAIN")
+try:
+	main(metaData)
+except Exception as e:
+	writeLog("ENCOUNTERED EXCEPTION: "+str(e))
+	print ("ENCOUNTERED ERROR:\t"+str(e))
+	print ("Please try launching the program again, and if this error persists, please contact NS Raghav: raghav170555@mechyd.ac.in")
+pg.quit()
+
+writeLog("USER EXIT")
+
+print ("Thank you! If you have completed the Annotation, please follow the instructions. If not, you can re-run the program and you will continue from where you left.")
