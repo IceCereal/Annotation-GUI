@@ -156,3 +156,11 @@ except:
 	print ("ERROR1: PYGAME\n\nEXIT")
 	writeLog("IMPORT PYGAME: FAIL! SYS EXIT")
 	sys.exit()
+
+# ATTEMPT TO DOWNLOAD NLTK.WORDNET
+try:
+	nltk.download('wordnet')
+except:
+	print ("ERROR2: NLTK - DOWNLOAD\n\nEXIT")
+	writeLog("DOWNLOAD NLTK.DOWNLOAD('WORDNET'): FAIL! SYS EXIT")
+	sys.exit()
