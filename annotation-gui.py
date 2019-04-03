@@ -311,3 +311,16 @@ def buttonClick(msg,x,y,w,h,ic,ac, listOfSynsChosen=None, finiale = None, unclic
 
 	message = myfont.render(msg, 1, pg.Color("White"))
 	screen.blit( message, (x+w, y) )
+
+# DRAW BUTTON: NO-CLICK
+def drawButton(msg,x,y,w,h,ic,ac, listOfSynsChosen=None, finiale = None, unclick = None, lastClick = None):
+	mouse = pg.mouse.get_pos()
+
+	if x+w > mouse[0] > x and y+h > mouse[1] > y:
+		pg.draw.rect(screen, ac,(x,y,w,h))
+	
+	else:
+		pg.draw.rect(screen, ic,(x,y,w,h))
+	
+	message = myfont.render(msg, 1, pg.Color("White"))
+	screen.blit (message, (x+w, y) )
