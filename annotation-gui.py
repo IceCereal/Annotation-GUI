@@ -133,3 +133,24 @@ except:
 	print ("ERROR1: NLTK\n\nEXIT")
 	writeLog("IMPORT NLTK: FAIL! SYS EXIT")
 	sys.exit()
+
+# IMPORT PYGAME ATTEMPT#1
+try:
+	import pygame as pg
+	writeLog("PYGAME#1 IMPORTED")
+except:
+	try:
+		subprocess.run(['pip', 'install', 'pygame']) # PIP INSTALL (PIP3 DOESN'T EXIST)
+		writeLog("PIP INSTALL PYGAME: SUCCESS")
+	except:
+		subprocess.run(['pip3', 'install', 'pygame']) # PIP3 INSTALL (PIP DOESN'T EXIST)
+		writeLog("PIP3 INSTALL PYGAME: SUCCESS")
+
+# IMPORT PYGAME ATTEMPT#2
+try:
+	import pygame as pg
+	writeLog("PYGAME#2 IMPORTED")
+except:
+	print ("ERROR1: PYGAME\n\nEXIT")
+	writeLog("IMPORT PYGAME: FAIL! SYS EXIT")
+	sys.exit()
