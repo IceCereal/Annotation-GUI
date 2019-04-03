@@ -198,6 +198,7 @@ except:
 synonymsTotal = [] 
 relSynonyms = []
 
+# INSTRUCTIONS
 writeLog("BEGIN INSTRUCTIONS")
 print (	"\nInstructions:"
 	"\nIf you misspell a word, please continue. There is no back button."
@@ -209,9 +210,24 @@ print (	"\nInstructions:"
 inp = input()
 writeLog("INPUT RECEIVED INSTRUCTIONS:\t" + inp)
 
+# PYGAME INITIALIZED
 pg.init()
 pg.display.set_caption("Annotation")
 screen = pg.display.set_mode((800,800))
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('green')
 FONT = pg.font.Font(None, 32)
+
+# GET SYNONYMS THROUGH WORDNET
+def getSyns(syn):
+	synonymsTotal = []
+	for synonym in wordnet.synsets(syn):
+		for l in synonym.lemmas(): 
+			synonymsTotal.append(l.name()) 
+
+	synonymsTotal = list(set(synonymsTotal))
+
+	if syn in synonymsTotal:
+		synonymsTotal.remove(syn)
+
+	return synonymsTotal
