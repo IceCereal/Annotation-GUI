@@ -324,3 +324,5 @@ def drawButton(msg,x,y,w,h,ic,ac, listOfSynsChosen=None, finiale = None, unclick
 	
 	message = myfont.render(msg, 1, pg.Color("White"))
 	screen.blit (message, (x+w, y) )
+
+myfont = pg.font.SysFont("Serif", 20)
