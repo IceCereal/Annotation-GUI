@@ -325,4 +325,168 @@ def drawButton(msg,x,y,w,h,ic,ac, listOfSynsChosen=None, finiale = None, unclick
 	message = myfont.render(msg, 1, pg.Color("White"))
 	screen.blit (message, (x+w, y) )
 
+# GLOBAL FONT
 myfont = pg.font.SysFont("Serif", 20)
+
+### MAIN DRIVER
+def main(metaData):
+	writeLog("ENTERED MAIN: INIT VARS")	
+
+	clock = pg.time.Clock()
+	input_box1 = InputBox(100, 200, 140, 32)
+	input_boxes = [input_box1]
+	done = False
+
+	listOfSynsChosen = [] # List of chosen synonyms
+	globalSynonymCounter = 0 # Synonym Counter
+	tempFileDataHolder = '' # Data holder of Temp File
+
+	btnFlag = 0
+	btnColors = []
+
+	buttonClickFlag = 0
+
+	localCounter = 0
+
+	writeLog("VARIABLES INITIALIZED")
+
+	writeLog("BEGIN PROCESS:\t" + str(localCounter) +","+ str(globalSynonymsList[globalSynonymCounter][0]) +","+ str(globalSynonymsList[globalSynonymCounter][1]) +","+ str(globalSynonymsList[globalSynonymCounter][2]))
+
+	while not done:
+		for event in pg.event.get():
+			if event.type == pg.QUIT:
+				writeLog("QUIT BUTTON ENCOUNTERED")
+				done = True
+			if  event.type == pg.MOUSEBUTTONDOWN:
+				writeLog("CLICK ENCOUNTERED")
+				if event.button == 1:
+					buttonClickFlag = 1  
+
+			for box in input_boxes:
+				box.handle_event(event)
+
+		for box in input_boxes:
+			box.update()
+
+		screen.fill((30, 30, 30))
+		
+		for box in input_boxes:
+			box.draw(screen)
+
+		
+		header = myfont.render("#    UID    ADJ    NOUN", 1, pg.Color("White"))
+		label = myfont.render(str(globalSynonymCounter+1)+"."+str(localCounter+1)+"    "+globalSynonymsList[globalSynonymCounter][0]+"    "+globalSynonymsList[globalSynonymCounter][1]+"    "+globalSynonymsList[globalSynonymCounter][2], 1, pg.Color("White"))
+		altText = myfont.render("One Word Meanings of:   "+globalSynonymsList[globalSynonymCounter][1], 1, pg.Color("White"))
+		screen.blit(header, (100, 20))
+		screen.blit(altText, (100, 80))
+		screen.blit(label, (100, 50))
+		
+		
+		if input_box1.flag == 1:
+			with open("Temp.txt", 'r') as Fobj:
+				rawdata = Fobj.read()
+				tempFileDataHolder = le(rawdata)
+
+			x = 0
+
+			if btnFlag == 0:
+				for i in range(0,len(tempFileDataHolder)-1):
+					btnColors.append(0)
+				btnFlag = 1
+
+			if (buttonClickFlag == 1):
+				buttonClickFlag = 0
+				for i in range(0,len(tempFileDataHolder)-1):
+					if i > 20:
+						break
+					if btnColors[i] == 0:
+						if (buttonClick(tempFileDataHolder[i],320,200+x,20,20,pg.Color("red"),pg.Color("yellow"), listOfSynsChosen, unclick=False)):
+							btnColors[i] = 1
+					else:
+						if (buttonClick(tempFileDataHolder[i],320,200+x,20,20,pg.Color("green"),pg.Color("yellow"), listOfSynsChosen,unclick=True)):
+							btnColors[i] = 0
+
+					x += 21
+			else:
+				for i in range(0,len(tempFileDataHolder)-1):
+					if i > 20:
+						break
+					if btnColors[i] == 0:
+						if (drawButton(tempFileDataHolder[i],320,200+x,20,20,pg.Color("red"),pg.Color("yellow"), listOfSynsChosen, unclick=False)):
+							btnColors[i] = 1
+					else:
+						if (drawButton(tempFileDataHolder[i],320,200+x,20,20,pg.Color("green"),pg.Color("yellow"), listOfSynsChosen,unclick=True)):
+							btnColors[i] = 0
+
+					x += 21
+
+			if (buttonClick("Next",320,200+x, 20, 20, pg.Color("blue"),pg.Color("lightblue"), listOfSynsChosen=None, finiale=True,unclick=False )):
+				try:
+					listOfSynsChosen.append(tempFileDataHolder[i+1])
+				except:
+					listOfSynsChosen.append(tempFileDataHolder[0])
+				print (listOfSynsChosen)
+				localCounter += 1
+
+				btnColors = []
+				btnFlag = 0
+
+				writeLog("NEXT BUTTON CLICKED. DATA IN LISTOFSYNSCHOSEN:\t" + str(listOfSynsChosen))
+
+				if localCounter > 1:
+					localCounter = 0
+
+					writeLog("BEGIN: WRITING TO CAPTUREDDATA.CSV")
+					with open("CapturedData.csv", 'a') as Fobj2:
+						Fobj2.write("\n"+str(globalSynonymsList[globalSynonymCounter][0])+','+str(listOfSynsChosen))
+					writeLog("COMPLETED: WRITING TO CAPTUREDDATA.CSV")
+
+					writeLog("WRITE TO SOURCEALTS-CAPTUREDATA"+str(metaData["Sessions_Activated"])+".csv")
+					try:
+						writeLog("TRY: WRITE TO WINDOWS")
+						with open("SourceAlts\\CapturedData"+str(metaData["Sessions_Activated"])+".csv", 'a') as Fobj:
+							Fobj.write("\n"+str(globalSynonymsList[globalSynonymCounter][0])+','+str(listOfSynsChosen))
+						writeLog("SUCCESS: WRITE TO WINDOWS")
+					except:
+						writeLog("TRY: WRITE TO LINUX/MACOS")
+						with open("SourceAlts/CapturedData"+str(metaData["Sessions_Activated"])+".csv", 'a') as Fobj:
+							Fobj.write("\n"+str(globalSynonymsList[globalSynonymCounter][0])+','+str(listOfSynsChosen))
+						writeLog("SUCCESS: WRITE TO LINUX/MACOS")
+
+					removeLineFlag = 0
+					linesToWrite = []
+
+					writeLog("UPDATE: SOURCEFILE.CSV")
+					with open("SourceEditable.csv", 'r') as Fobj:
+						reader = csv.reader(Fobj)
+
+						for line in reader:
+							if removeLineFlag == 0:
+								removeLineFlag = 1
+								continue
+							else:
+								linesToWrite.append(line)
+
+					with open("SourceEditable.csv", 'w') as Fobj:
+						for line in linesToWrite:
+							Fobj.write(line[0]+','+line[1]+','+line[2]+'\n')
+					writeLog("UPDATED: UPDATING SOURCEFILE.CSV")
+
+					writeLog("UPDATE METADATA_ANNOTATION.JSON")
+					with open("metadata_annotation.json", 'r') as Fobj:
+						metaDataRaw = Fobj.read()
+						metaData = json.loads(metaDataRaw)
+					metaData["WordsCompleted"] += 1
+					with open("metadata_annotation.json", 'w') as Fobj:
+						metaDataJson = json.dumps(metaData)
+						Fobj.write(metaDataJson)
+					writeLog("UPDATED: METADATA_ANNOTATION.JSON")
+					
+					globalSynonymCounter += 1
+					listOfSynsChosen = []
+
+				input_box1.flag = 0
+
+		pg.display.flip()
+
+		clock.tick(60)
