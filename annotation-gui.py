@@ -165,10 +165,13 @@ except:
 	writeLog("DOWNLOAD NLTK.DOWNLOAD('WORDNET'): FAIL! SYS EXIT")
 	sys.exit()
 
+# IMPORT WORDNET
 from nltk.corpus import wordnet
 
+# THE LIST OF SYNONYMS THAT CONTAINS ALL FUTURE SYNONYMS
 globalSynonymsList = []
 
+# READ SOURCE EDITABLE / SOURCE
 try:
 	writeLog("TRY READING SOURCEEDITABLE")
 	with open("SourceEditable.csv", 'r') as Fobj:
@@ -194,3 +197,14 @@ except:
 
 synonymsTotal = [] 
 relSynonyms = []
+
+writeLog("BEGIN INSTRUCTIONS")
+print (	"\nInstructions:"
+	"\nIf you misspell a word, please continue. There is no back button."
+	"\nIf you select any wrong option and click next, please continue."
+	"\nIf you quit at any time, you can continue by running this program again from where you left off."
+	"\nIf there are any issues, please contact NS Raghav: raghav170555@mechyd.ac.in"
+	"\n\nPlease hit enter to continue."
+	)
+inp = input()
+writeLog("INPUT RECEIVED INSTRUCTIONS:\t" + inp)
