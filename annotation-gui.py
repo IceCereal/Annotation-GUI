@@ -232,6 +232,7 @@ def getSyns(syn):
 
 	return synonymsTotal
 
+# INPUT TEXT BOX
 class InputBox:
 
 	def __init__(self, x, y, w, h, text=''):
@@ -281,3 +282,32 @@ class InputBox:
 	def draw(self, screen):
 		screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
 		pg.draw.rect(screen, self.color, self.rect, 2)
+
+# IF A BUTTON IS CLICKED
+def buttonClick(msg,x,y,w,h,ic,ac, listOfSynsChosen=None, finiale = None, unclick = None, lastClick = None):
+	mouse = pg.mouse.get_pos()
+	click = pg.mouse.get_pressed()
+	
+	if x+w > mouse[0] > x and y+h > mouse[1] > y:
+		pg.draw.rect(screen, ac,(x,y,w,h))
+
+		if click[0] == 1:
+			if finiale == True:
+				return True
+			
+			if msg not in listOfSynsChosen:
+				listOfSynsChosen.append(msg)
+				return True
+			
+			if unclick == True:
+				try:
+					listOfSynsChosen.remove(msg)
+				except:
+					pass
+				return True
+			
+	else:
+		pg.draw.rect(screen, ic,(x,y,w,h))
+
+	message = myfont.render(msg, 1, pg.Color("White"))
+	screen.blit( message, (x+w, y) )
