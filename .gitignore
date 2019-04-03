@@ -1,0 +1,10 @@
+# VSCODE
+.vscode/
+
+# CREATED FILES
+SourceAlts/
+CapturedData.csv
+Logger.txt
+metadata_annotation.json
+Source*
+Temp.txt
