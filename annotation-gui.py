@@ -41,7 +41,7 @@ def makeSourceEditable():
 
 			try:
 				subprocess.run(['copy', fileName, 'SourceEditable.csv'], shell=True)
-				writeLog("FOUND AND COPIED SOURCEFILE TO SOURCEEDITABLE")
+				writeLog("FOUND AND COPIED SOURCE TO SOURCEEDITABLE")
 			except:
 				writeLog("COPY SOURCE TO SOURCEEDITABLE: FAILED! ASKING FOR MANUAL COPY & RENAME")
 				
@@ -165,4 +165,32 @@ except:
 	writeLog("DOWNLOAD NLTK.DOWNLOAD('WORDNET'): FAIL! SYS EXIT")
 	sys.exit()
 
-from nltk.corpus import wordnet 
+from nltk.corpus import wordnet
+
+globalSynonymsList = []
+
+try:
+	writeLog("TRY READING SOURCEEDITABLE")
+	with open("SourceEditable.csv", 'r') as Fobj:
+		reader = csv.reader(Fobj)
+
+		for row in reader:
+			globalSynonymsList.append((row[0], row[1], row[2]))
+	writeLog("SUCCESS READING SOURCEEDITABLE")
+except:
+	try:
+		writeLog("TRY READING SOURCE")
+		with open(fileNameOrigSource, 'r') as Fobj:
+			reader = csv.reader(Fobj)
+
+			for row in reader:
+				globalSynonymsList.append((row[0], row[1], row[2]))
+		writeLog("SUCCESS READING SOURCE")
+	except:
+		print ("ERROR3: READING SOURCE FILE\n\nEXIT")
+	
+		writeLog("READING SOURCE FILE: FAIL! SYS EXIT")
+		sys.exit()
+
+synonymsTotal = [] 
+relSynonyms = []
