@@ -164,3 +164,5 @@ except:
 	print ("ERROR2: NLTK - DOWNLOAD\n\nEXIT")
 	writeLog("DOWNLOAD NLTK.DOWNLOAD('WORDNET'): FAIL! SYS EXIT")
 	sys.exit()
+
+from nltk.corpus import wordnet 
