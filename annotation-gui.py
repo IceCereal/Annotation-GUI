@@ -96,3 +96,11 @@ else:
 	metaData["OriginalSourceFileName"] = fileNameOrigSource
 
 	writeLog("CREATED METADATA_ANNOTATION.JSON")
+
+# LOOK/CREATE SOURCEALTS/ OR SOURCEALTS\
+writeLog("CREATE/LOOK FOR SOURCEALTS DIR")
+try:
+	mkdir("SourceAlts")
+	writeLog("CREATED SOURCEALTS")
+except:
+	writeLog("LOCATED SOURCEALTS")
