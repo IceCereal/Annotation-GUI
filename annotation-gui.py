@@ -18,7 +18,7 @@ from ast import literal_eval as le
 # LOGGER FUNCTION
 def writeLog(writeData : str):
 	with open("Logger.txt", 'a') as FLog:
-		FLog.write("\n"+str(datetime.datetime.now())+"\t"+writeData.upper())
+		FLog.write("\n"+str(datetime.now())+"\t"+writeData.upper())
 
 writeLog("\n\nBEGIN SESSION")
 
