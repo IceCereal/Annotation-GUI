@@ -59,3 +59,15 @@ def makeSourceEditable():
 	writeLog("COMPLETE: MAKE SOURCEEDITABLE")
 	
 	return tempFileNameHolder
+
+# ORIGINAL FILE NAME: SOURCE*.CSV
+fileNameOrigSource = ''
+
+# FIND ALL THE FILES IN THE CURRENT DIRECTORY
+filesInDir = [f for f in listdir('.') if isfile(join('.', f))]
+
+# LOOK/CREATE SOURCEEDITABLE.CSV
+writeLog("LOOKING FOR SOURCEEDITABLE.CSV")
+if "SourceEditable.csv" not in filesInDir:
+	fileNameOrigSource = makeSourceEditable()
+writeLog("FOUND/COMPLETED: SOURCEEDITABLE")
