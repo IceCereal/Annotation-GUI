@@ -208,3 +208,10 @@ print (	"\nInstructions:"
 	)
 inp = input()
 writeLog("INPUT RECEIVED INSTRUCTIONS:\t" + inp)
+
+pg.init()
+pg.display.set_caption("Annotation")
+screen = pg.display.set_mode((800,800))
+COLOR_INACTIVE = pg.Color('lightskyblue3')
+COLOR_ACTIVE = pg.Color('green')
+FONT = pg.font.Font(None, 32)
